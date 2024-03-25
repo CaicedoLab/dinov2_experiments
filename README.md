@@ -1,7 +1,7 @@
 # imagenetEvaluations
 Experiments running pretrain evaluations
 
-**pretrainEvals.sh**
+**pretrainEvals.sh**\n
   script file for running pretrain evaluations
 
 **.sub**
