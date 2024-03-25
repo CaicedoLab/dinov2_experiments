@@ -4,9 +4,9 @@ docker_image = docker://arkkienkeli/dinov2:2
 executable = ./pretrainEvals.sh
 
 should_transfer_files = YES
-transfer_input_files = ./vits14_reg4_pretrain.yaml,./dinov2_vits14_reg4_pretrain.pth,./labels.txt,./pretrainEvals.sh,./deleteafteruse.sh,./begin.sh,pretrainEvalsV2.sh,pretrainBUTJUSTCOMMAND.sh 
+transfer_input_files = ./dinov2_vits14_reg4_pretrain.pth,./pretrainEvals.sh
 transfer_output_files = pretrainEvalsOutput.tar.gz
-when_to_transfer_output = ON_EXIT 
+when_to_transfer_output = ON_EXIT
 
 output = gpu-chtc_$(Cluster).out
 error = gpu-chtc_$(Cluster).err
@@ -17,8 +17,7 @@ request_memory = 100GB
 request_gpus = 1
 +WantGPULab = true
 +GPUJobLength = "short"
-request_disk = 300GB
+request_disk = 400GB
 requirements = (Machine == "jcaicedogpu0000.chtc.wisc.edu" || Machine == "jcaicedogpu0001.chtc.wisc.edu")
 
 queue
-
