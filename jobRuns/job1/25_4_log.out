@@ -1,0 +1,2 @@
+submitit INFO (2024-03-25 21:58:17,683) - Starting with JobEnvironment(job_id=25, hostname=jcaicedogpu0001.chtc.wisc.edu, local_rank=4(8), node=0(1), global_rank=4(8))
+submitit INFO (2024-03-25 21:58:17,683) - Loading pickle: /home/dinov2/output/knn/25_submitted.pkl
