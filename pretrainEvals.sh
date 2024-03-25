@@ -1,13 +1,6 @@
-#save working directory
-export jobDir=$(pwd)
-
 echo "var values before modifying:"
 echo $CUDA_VISIBLE_DEVICES
 echo $NVIDIA_VISIBLE_DEVICES
-
-
-#setting cuda env variable
-export CUDA_VISIBLE_DEVICES=0
 
 #copy large files from /staging
 cp /staging/groups/caicedo_group/imagenet.zip ./
@@ -27,13 +20,18 @@ cd ..
 #setting directories
 mkdir /home/dinov2/checkpoints
 cp dinov2_vits14_reg4_pretrain.pth /home/dinov2/checkpoints
+export jobDir=$(pwd)
 cd /home/dinov2
 
 mkdir output
 mkdir ./output/knn
 
+#init PYTHONPATH
+export PYTHONPATH=/home/dinov2
+export CUDA_VISIBLE_DEVICES=0
+
 #running pretrained evals (python3)
-torchrun --nproc_per_node=1 dinov2/run/eval/knn.py \
+torchrun --nproc_per_node=1 ./dinov2/run/eval/knn.py \
     --config-file ./dinov2/configs/eval/vits14_reg4_pretrain.yaml \
     --pretrained-weights ./checkpoints/dinov2_vits14_reg4_pretrain.pth \
     --output-dir ./output/knn \
@@ -48,10 +46,4 @@ cp pretrainEvalsOutput.tar.gz $jobDir
 #copy output to staging and setup output in staging + analysis purposes
 cp pretrainEvalsOutput.tar.gz /staging/groups/caicedo_group/aditya_pillai
 cd /staging/groups/caicedo_group/aditya_pillai
-tar -xvf pretrainEvalsOutput.tar.gz -C mid
-cd ./mid/output/knn/
-mv *.err /staging/groups/caicedo_group/aditya_pillai/alltrainings
-mv *.out /staging/groups/caicedo_group/aditya_pillai/alltrainings
-cd /staging/groups/caicedo_group/aditya_pillai/mid
-rm -rf output
-
+tar -xvf pretrainEvalsOutput.tar.gz -C ./alltrainings/job3
