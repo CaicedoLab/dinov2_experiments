@@ -1,0 +1,7 @@
+# default config for 1 gpu
+train:
+  dataset_path: ImageNet:split=TRAIN
+  batch_size_per_gpu: 64
+  OFFICIAL_EPOCH_LENGTH: 1
+student:
+  block_chunks: 4
