@@ -38,7 +38,7 @@ export WANDB_API_KEY=61bf6d44e974b73170041842d514538f0ab4ed00
  #   train.dataset_path=ImageNet:split=TRAIN:root=$jobDir/imagenet/train:extra=$jobDir/extra &
 
 #python -m torch.distributed.launch
-torchrun --nproc_per_node=1 ./dinov2/train/train.py --config-file=./dinov2/configs/train/config.yaml --output-dir=./output train.dataset_path=ImageNet:split=TRAIN:root=/scratch/appillai/imagenet/train:extra=/scratch/appillai/extra &
+torchrun --nproc_per_node=1 ./dinov2/train/train.py --config-file=./dinov2/configs/train/config.yaml --output-dir=./output train.dataset_path=ImageNet:split=TRAIN:root=/scratch/appillai/imagenet/train:extra=/scratch/extra &
 wait
 
 tar -cvzf TrainingOutput.tar.gz output
