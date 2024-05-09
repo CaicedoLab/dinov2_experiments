@@ -1,0 +1,17 @@
+universe = docker
+docker_image = docker://adipill04/my_image_name:latest
+docker_network_type = host
+executable = trainingScript.sh
+arguments = rank0 9640
+requirements = GPUS_MaxSupportedVersion > 12000
+should_transfer_files = yes
+transfer_input_files = /usr/lib64/python3.9/site-packages/htcondor/htchirp/htchirp.py, __init__.py, train.py, config.yaml, trainingScript.sh
++WantIOProxy = true
+Request_Cpus = 10
+Request_gpus = 2
+Request_Disk = 500GB
+Request_Memory = 100GB
+output = out.rank0
+error  = err.rank0
+log    = log
+queue
