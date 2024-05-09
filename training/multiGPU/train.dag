@@ -1,0 +1,15 @@
+##### train.dag #################
+# Dag workflow to run multi-node training
+
+# A Provisioner node always runs first
+# Until it starts, and condor_chirps back to the
+# scheduler, telling dagman it is ready, no
+# other node can run.  This is done in the worker
+# by running
+# python3 htchirp.py set_job_attr ProvisionerState 2
+
+PROVISIONER RANK0 gpu.sub
+
+JOB WORKER gpuworker.sub
+SCRIPT PRE WORKER injectRank0Name.sh
+#########################################
