@@ -1,85 +1,79 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
-#
-# This source code is licensed under the Apache License, Version 2.0
-# found in the LICENSE file in the root directory of this source tree.
+Last login: Wed May  8 19:59:06 on console
 
-import os
-from typing import Any
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+Adityas-MacBook-Pro-2:~ adityapillai$ ssh appillai@ap2002.chtc.wisc.edu
+(appillai@ap2002.chtc.wisc.edu) Password: 
+(appillai@ap2002.chtc.wisc.edu) Duo two-factor login for appillai
 
-import torch
-import dinov2.distributed as distributed
-from functools import partial
-from fvcore.common.checkpoint import Checkpointer
-from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
-from torch.distributed.fsdp import ShardingStrategy
-from torch.distributed.fsdp import MixedPrecision
-from torch.distributed.fsdp import StateDictType
-from torch.distributed.fsdp.sharded_grad_scaler import ShardedGradScaler
-from torch.distributed.fsdp.wrap import ModuleWrapPolicy
-from torch.distributed.fsdp._runtime_utils import _reshard
+Enter a passcode or select one of the following options:
 
+ 1. Duo Push to XXX-XXX-6979
 
-def get_fsdp_wrapper(model_cfg, modules_to_wrap=set()):
-    sharding_strategy_dict = {
-        "NO_SHARD": ShardingStrategy.NO_SHARD,
-        "SHARD_GRAD_OP": ShardingStrategy.SHARD_GRAD_OP,
-        "FULL_SHARD": ShardingStrategy.FULL_SHARD,
-    }
+Passcode or option (1-1): 1
+Success. Logging you in...
+Success. Logging you in...
+Last login: Wed May  8 21:35:59 2024 from 10.130.176.99
+_____________________________________________________________________
+ #####  #     # #######  #####  Issues?  Email chtc@cs.wisc.edu
+#     # #     #    #    #     # Unauthorized use prohibited by:
+#       #     #    #    #       WI Statutes: s. 947.0125
+#       #######    #    #       U.S. Code: 18 USC 1030
+#       #     #    #    #       U.S. Code: 18 USC 2510-2522
+#     # #     #    #    #     # U.S. Code: 18 USC 2701-2712
+ #####  #     #    #     #####  U.S. Code: 18 USC § 1831
+For off campus ssh access use https://www.doit.wisc.edu/network/vpn/
+_____________________________________________________________________
 
-    dtype_dict = {
-        "fp32": torch.float32,
-        "fp16": torch.float16,
-        "bf16": torch.bfloat16,
-    }
+           Virtual office hours are available twice a week:
+ Tuesdays, 10:30am - 12pm and Thursdays, 3:00 - 4:30pm (Central time)
+           Join via this link: go.wisc.edu/chtc-officehours
+        Sign in via this link: go.wisc.edu/chtc-officehours-signin
+Filesystem quota report
+Storage           Used (GB)    Limit (GB)    Files (#)    File Cap (#)    Quota (%)
+--------------  -----------  ------------  -----------  --------------  -----------
+/home/appillai         0.84            50         3073               0         1.67
 
-    mixed_precision_config = MixedPrecision(
-        param_dtype=dtype_dict[model_cfg.mixed_precision.param_dtype],
-        reduce_dtype=dtype_dict[model_cfg.mixed_precision.reduce_dtype],
-        buffer_dtype=dtype_dict[model_cfg.mixed_precision.buffer_dtype],
-    )
-
-    sharding_strategy_config = sharding_strategy_dict[model_cfg.sharding_strategy]
-
-    local_rank = distributed.get_local_rank()
-
-    fsdp_wrapper = partial(
-        FSDP,
-        sharding_strategy=sharding_strategy_config,
-        mixed_precision=mixed_precision_config,
-        device_id=local_rank,
-        sync_module_states=True,
-        use_orig_params=True,
-        auto_wrap_policy=ModuleWrapPolicy(modules_to_wrap),
-    )
-    return fsdp_wrapper
-
-
-def is_fsdp(x):
-    return isinstance(x, FSDP)
-
-
-def is_sharded_fsdp(x):
-    return is_fsdp(x) and x.sharding_strategy is not ShardingStrategy.NO_SHARD
-
-
-def free_if_fsdp(x):
-    if is_sharded_fsdp(x):
-        handles = x._handles
-        true_list = [True for h in handles]
-        _reshard(x, handles, true_list)
-
-
-def get_fsdp_modules(x):
-    return FSDP.fsdp_modules(x)
-
-
-def reshard_fsdp_model(x):
-    for m in get_fsdp_modules(x):
-        free_if_fsdp(m)
+[appillai@ap2002 ~]$ cd dinoExperiments/
+[appillai@ap2002 dinoExperiments]$ ls
+trained
+[appillai@ap2002 dinoExperiments]$ cd trained/
+[appillai@ap2002 trained]$ ls
+config.yaml        datasetinstall.sub  gpu-chtc_1567674.log  gpu-chtc_1569705.log  gpu-chtc_1569884.log  gpu-chtc_1572552.log  gpu-chtc_1572988.log  __init__.py   training.sh   train.py
+datasetinstall.sh  docker_stderror     gpu-chtc_1569705.err  gpu-chtc_1569705.out  gpu-chtc_1569885.log  gpu-chtc_1572840.log  gpu-chtc_1573440.log  testmultigpu  training.sub
+[appillai@ap2002 trained]$ cd testmultigpu/
+[appillai@ap2002 testmultigpu]$ s
+-bash: s: command not found
+[appillai@ap2002 testmultigpu]$ ls
+config.yaml          docker_stderror  gpu.sub                 __init__.py         log        rank0_contact  train.dag.condor.sub  train.dag.dagman.out  train.dag.lib.out  train.dag.nodes.log  train.dag.rescue001.old  train.py
+debug-cli.25805.log  err.rank0        gpuworker.sub.template  injectRank0Name.sh  out.rank0  train.dag      train.dag.dagman.log  train.dag.lib.err     train.dag.metrics  train.dag.rescue001  trainingScript.sh
+[appillai@ap2002 testmultigpu]$ vim err.rank0
+[appillai@ap2002 testmultigpu]$ ls
+config.yaml          docker_stderror  gpu.sub                 __init__.py         log        rank0_contact  train.dag.condor.sub  train.dag.dagman.out  train.dag.lib.out  train.dag.nodes.log  train.dag.rescue001.old  train.py
+debug-cli.25805.log  err.rank0        gpuworker.sub.template  injectRank0Name.sh  out.rank0  train.dag      train.dag.dagman.log  train.dag.lib.err     train.dag.metrics  train.dag.rescue001  trainingScript.sh
+[appillai@ap2002 testmultigpu]$ cd ..
+[appillai@ap2002 trained]$ ls
+config.yaml        datasetinstall.sub  gpu-chtc_1567674.log  gpu-chtc_1569705.log  gpu-chtc_1569884.log  gpu-chtc_1572552.log  gpu-chtc_1572988.log  __init__.py   training.sh   train.py
+datasetinstall.sh  docker_stderror     gpu-chtc_1569705.err  gpu-chtc_1569705.out  gpu-chtc_1569885.log  gpu-chtc_1572840.log  gpu-chtc_1573440.log  testmultigpu  training.sub
+[appillai@ap2002 trained]$ vim train.py
+[appillai@ap2002 trained]$ vim training.sub
+[appillai@ap2002 trained]$ vim training.sh
+[appillai@ap2002 trained]$ vim config.yaml 
+[appillai@ap2002 trained]$ vim __init__.py 
+[appillai@ap2002 trained]$ vim training.sh
+[appillai@ap2002 trained]$ vim training.sub
+[appillai@ap2002 trained]$ vim training.sub
+[appillai@ap2002 trained]$ cd testmultigpu/
+[appillai@ap2002 testmultigpu]$ ls
+config.yaml          docker_stderror  gpu.sub                 __init__.py         log        rank0_contact  train.dag.condor.sub  train.dag.dagman.out  train.dag.lib.out  train.dag.nodes.log  train.dag.rescue001.old  train.py
+debug-cli.25805.log  err.rank0        gpuworker.sub.template  injectRank0Name.sh  out.rank0  train.dag      train.dag.dagman.log  train.dag.lib.err     train.dag.metrics  train.dag.rescue001  trainingScript.sh
+[appillai@ap2002 testmultigpu]$ vim __init
+[appillai@ap2002 testmultigpu]$ vim __init__.py 
 
 
-def rankstr():
-    return f"rank_{distributed.get_global_rank()}"
+
+
 
 
 class FSDPCheckpointer(Checkpointer):
