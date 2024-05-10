@@ -27,7 +27,7 @@ mkdir output
 #init PYTHONPATH
 export PYTHONPATH=.
 #export CUDA_VISIBLE_DEVICES=0
-export WANDB_API_KEY=61bf6d44e974b73170041842d514538f0ab4ed00
+export WANDB_API_KEY= #your WANDB api key
 
 #training script. initally starting with 1 node 1 epoch (torchrun --nproc_per_node=1)
 #torchrun --nproc_per_node=1 ./dinov2/run/train/train.py \
