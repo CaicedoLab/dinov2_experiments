@@ -31,6 +31,6 @@ cd /home/wandbIntegrate
 mkdir output
 
 export PYTHONPATH=.
-export WANDB_API_KEY=61bf6d44e974b73170041842d514538f0ab4ed00
+export WANDB_API_KEY=#your WANDB api key
 
 torchrun --nnodes 1:4 --nproc_per_node 2 --rdzv_backend c10d --rdzv-id 1 --rdzv-endpoint "$h:$p" ./dinov2/train/train.py --config-file=./dinov2/configs/train/config.yaml --output-dir=./output train.dataset_path=ImageNet:split=TRAIN:root=/scratch/appillai/imagenet/train:extra=/scratch/extra
