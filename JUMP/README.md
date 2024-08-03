@@ -5,7 +5,7 @@ Run dinov2 model with the following steps. Training metrics can be viewed on wei
 ### 1. Run `condor_submit training.sub` to submit a job to a cluster. Both neccessary files found in `./CHTC`
   - Add wandb api key to `training.sh` if you would like to track training metrics
   - Be sure to update the docker image for your own use case
-  - Files and directories can be stored persistently in the `/scratch` directory within the job
+  - Files and directories can be stored persistently in the `/scratch` directory within the job. (Recommended for storing datasets)
 
 
 
