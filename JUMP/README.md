@@ -7,10 +7,10 @@ Run dinov2 model with the following steps. Training metrics can be viewed on wei
   - Be sure to update the docker image for your own use case
   - Files and directories can be stored persistently in the `/scratch` directory within the job. (Recommended for storing datasets)
 
-
+  
 
 ## GPU servers (running directly):
-### 1. Have a dinov2 repository ready 
+### 1. Have dinov2 repository ready 
 ### 2. Install dinov2 dependencies in a conda based environment. 
 > NOTE: Certain package versions are not available in the provided conda channels. It might be easier to install all packages in the base environment
 ### 3. Run `script.sh` to start training
