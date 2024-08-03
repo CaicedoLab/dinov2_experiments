@@ -13,6 +13,6 @@ Run dinov2 model with the following steps. Training metrics can be viewed on wei
 ### 1. Have dinov2 repository ready 
 ### 2. Install dinov2 dependencies in a conda based environment. 
 > NOTE: Certain package versions are not available in the provided conda channels. It might be easier to install all packages in the base environment
-### 3. Run `script.sh` to start training
+### 3. Run `script.sh` to start training Found in `./Morgridge`
   - Choose GPUs through `CUDA_VISIBLE_DEVICES` env variable
 
