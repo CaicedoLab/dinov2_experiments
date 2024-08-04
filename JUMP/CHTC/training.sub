@@ -4,7 +4,7 @@ docker_image = docker://arkkienkeli/dinov2_cellpainting:8
 executable=./training.sh
 
 should_transfer_files = YES
-transfer_input_files = training.sh,train.py,__init__.py,vits16_jump.yaml
+transfer_input_files = training.sh,vits16_jump.yaml 
 
 
 output = gpu-chtc_$(Cluster).out
