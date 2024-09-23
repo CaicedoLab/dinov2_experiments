@@ -1,16 +1,20 @@
+#indicate job should run in which docker container
 universe = docker
 docker_image = docker://arkkienkeli/dinov2_cellpainting:8
 
+#executable training script
 executable=./training.sh
 
+#transfer of files
 should_transfer_files = YES
 transfer_input_files = training.sh,vits16_jump.yaml 
-
+transfer_output_files = #add output files here
 
 output = gpu-chtc_$(Cluster).out
 error = gpu-chtc_$(Cluster).err
 log = gpu-chtc_$(Cluster).log
 
+#set resource allocation
 request_cpus = 50
 request_memory = 100GB
 request_gpus = 1
